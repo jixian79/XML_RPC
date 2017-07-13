@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from xmlrpclib import ServerProxy,Fault
 from cmd import Cmd
 from random import choice
@@ -16,7 +17,7 @@ def randomString(length):
     """
     chars = []
     letters = lowercase[:26]
-    while length > 0
+    while length > 0:
         length -=1
         chars.append(choice(letters))
     return ''.join(chars)
@@ -39,7 +40,7 @@ class Client(Cmd):
         #让服务器先启动
         sleep(HEAD_START)
         self.server = ServerProxy(url)
-        for line in open(urlfile)
+        for line in open(urlfile):
             line = line.strip()
             self.server.hello(line)
         
