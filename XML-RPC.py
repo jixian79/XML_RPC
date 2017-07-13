@@ -18,14 +18,16 @@ UNHANDLED = 100
 ACCESS_DENIED = 200
 
 class UnhandledQuery(Fault):
-    """"""
+    """表示无法处理的查询异常"""
     def __init__(self,message = "Couldn't handle the query"):
         Fault.__init__(self,UNHANDLED,message)
 class AccessDenied(Fault)
+    """用户试图访问未被授权的资源时引发的异常"""
     def __init__(self,message = "ACCESS DENIED"):
         Fault.__init__(self,ACCESS_DENIED,message)
         
 def inside(pdir,name):
+    """检查指定的目录中是否有给定的文件名"""
     pdir = abspath(pdir)
     name = abspath(name)
     return name.startswith(join(pdir,''))

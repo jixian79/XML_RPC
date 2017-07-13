@@ -12,7 +12,7 @@ SECRET_LENGTH = 100
 
 def randomString(length):
     """
-    
+    返回指定长度的由字母组成的随机字符串
     """
     chars = []
     letters = lowercase[:26]
@@ -23,10 +23,12 @@ def randomString(length):
 
 class Client(Cmd):
     """
+	Node类的简单基于文本的界面
     """
     prompt = '>'
     def __init__(self,url,dirname,urlfile):
         """
+	设定Url，dirname，urlfile，并且在单独的线程中启动node服务器
         """
         Cmd.__init__(self)
         self.secret = randomString(SECRET_LENGTH)
@@ -34,7 +36,7 @@ class Client(Cmd):
         t = Thread(target=n._start)
         t.setDaemon(1)
         t.start()
-        #
+        #让服务器先启动
         sleep(HEAD_START)
         self.server = ServerProxy(url)
         for line in open(urlfile)
@@ -43,6 +45,7 @@ class Client(Cmd):
         
     def do_fetch(self,arg):
         """
+	调用服务器的fetch方法
         """
         try:
             self.server.fetch(arg,self.secret)
@@ -51,7 +54,7 @@ class Client(Cmd):
             print "Couldn't find the file",arg
             
     def do_exit(self,arg):
-        ""
+        "退出程序"
         print
         sys.exit()
         
