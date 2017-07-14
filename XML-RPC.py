@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[ ]:
+
 
 from xmlrpclib import ServerProxy,Fault
 from xmlrpclib import Binary
@@ -21,7 +21,7 @@ class UnhandledQuery(Fault):
     """表示无法处理的查询异常"""
     def __init__(self,message = "Couldn't handle the query"):
         Fault.__init__(self,UNHANDLED,message)
-class AccessDenied(Fault)
+class AccessDenied(Fault):
     """用户试图访问未被授权的资源时引发的异常"""
     def __init__(self,message = "ACCESS DENIED"):
         Fault.__init__(self,ACCESS_DENIED,message)
@@ -51,7 +51,7 @@ class Node:
         """
         查询
         """
-        print "Start query"
+       # print "Start query"
         try:
             return self._handle(query)
         except UnhandledQuery:
@@ -94,8 +94,8 @@ class Node:
             try:
                 s = ServerProxy(other)
                 return s.query(query,history)
-            except Fault,f:
-                if f.faultCode = UNHANDLED:pass
+            except (Fault,f):
+                if f.faultCode == UNHANDLED:pass
                 else:self.known.remove(other)
             except:
                 self.known.remove(other)
