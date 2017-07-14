@@ -50,7 +50,7 @@ class Client(Cmd):
         """
         try:
             self.server.fetch(arg,self.secret)
-        except Fault,f:
+        except (Fault,f):
             if f.faultCode != UNHANDLED:raise
             print "Couldn't find the file",arg
             
