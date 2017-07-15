@@ -3,7 +3,7 @@ from xmlrpclib import ServerProxy,Fault
 from cmd import Cmd
 from random import choice
 from string import lowercase
-from XML_RPC import Node,UNHANDLED
+from Server import Node,UNHANDLED
 from threading import Thread
 from time import sleep
 import sys
@@ -33,7 +33,7 @@ class Client(Cmd):
         """
         Cmd.__init__(self)
         self.secret = randomString(SECRET_LENGTH)
-        n = Node(url,dirname,self,secret)
+        n = Node(url,dirname,self.secret)
         t = Thread(target=n._start)
         t.setDaemon(1)
         t.start()
@@ -50,7 +50,7 @@ class Client(Cmd):
         """
         try:
             self.server.fetch(arg,self.secret)
-        except (Fault,f):
+        except Fault,f:
             if f.faultCode != UNHANDLED:raise
             print "Couldn't find the file",arg
             
@@ -66,4 +66,4 @@ def main():
     client = Client(url,directory,urlfile)
     client.cmdloop()
     
-if __name__=='__main__':main
+if __name__=='__main__':main()

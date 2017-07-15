@@ -94,7 +94,7 @@ class Node:
             try:
                 s = ServerProxy(other)
                 return s.query(query,history)
-            except (Fault,f):
+            except Fault,f:
                 if f.faultCode == UNHANDLED:pass
                 else:self.known.remove(other)
             except:
